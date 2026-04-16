@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Connexion Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Statut de la connexion :</h1>
+    <div id="status">Connexion en cours...</div>
+    <ul id="data-list"></ul>
+
+    <script>
+        // 1. Configuration (Remplacez avec vos vraies clés)
+        const SUPABASE_URL = 'https://votre-id.supabase.co'
+        const SUPABASE_KEY = 'votre-cle-anon'
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+        async function testConnection() {
+            const statusEl = document.getElementById('status');
+            const listEl = document.getElementById('data-list');
+
+            // 2. Requête sur la table de test
+            const { data, error } = await supabase
+                .from('test_table')
+                .select('*')
+
+            if (error) {
+                statusEl.innerText = "Erreur : " + error.message;
+                statusEl.style.color = "red";
+            } else {
+                statusEl.innerText = "Connecté avec succès !";
+                statusEl.style.color = "green";
+                
+                // Affichage des données
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.name;
+                    listEl.appendChild(li);
+                });
+            }
+        }
+
+        testConnection();
+    </script>
+</body>
+</html>

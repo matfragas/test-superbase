@@ -14,14 +14,14 @@
         // 1. Configuration (Remplacez avec vos vraies clés)
         const SUPABASE_URL = 'https://ylzwwhweojxlnquleaub.supabase.co'
         const SUPABASE_KEY = 'sb_publishable_WPWUNDyiYAQl5rYVmmkDPw_W-P90Lt0'
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
         async function testConnection() {
             const statusEl = document.getElementById('status');
             const listEl = document.getElementById('data-list');
 
             // 2. Requête sur la table de test
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('test_table')
                 .select('*')
 
